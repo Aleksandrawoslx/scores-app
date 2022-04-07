@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import Navbar from "./components/Navbar";
 import { Route, Routes } from "react-router-dom";
 import ListEvents from "./components/ListEvents";
+import Fuse from 'fuse.js'
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
