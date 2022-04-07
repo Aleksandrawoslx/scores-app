@@ -1,23 +1,42 @@
-import logo from "./logo.svg";
 import Navbar from "./components/Navbar";
 import { Route, Routes } from "react-router-dom";
 import ListEvents from "./components/ListEvents";
-import Fuse from 'fuse.js'
+import Fuse from "fuse.js";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import {
+  Box,
+  DateInput,
+  Text,
+  TextInput,
+  RangeSelector,
+  Stack,
+  Heading,
+} from "grommet";
 import "./App.css";
 
 function App() {
-
   // relevant events and images states //
   const [events, setEvents] = useState();
-  const [images, setImages] = useState()
-  
+  const [images, setImages] = useState();
+  const [searchresults, setSearchResults] = useState();
+  const [inputValue, setInputValue] = useState("");
+
+  const fuse = new Fuse (events, {key: "strHomeTeam"});
+
+  const handleSearchInput = (e) => {
+    setInputValue(e.target.value);
+    const fuzzyResult = fuse.search(inputValue);
+    console.log(inputValue);
+    inputValue.length == 0
+      ? setSearchResults([])
+      : setSearchResults(fuzzyResult);
+  };
 
   // endpoint for events //
   const urlEvents =
-    "https://www.thesportsdb.com/api/v1/json/2/eventsseason.php?id=4328&s=2020-2021";
+    "https://www.thesportsdb.com/api/v1/json/2/eventsseason.php?id=4328&s=2021-2022";
 
   useEffect(() => {
     axios
@@ -30,9 +49,9 @@ function App() {
       });
   }, []);
 
-  
   // endpoint for images //
-  const urlImages = "https://www.thesportsdb.com/api/v1/json/2/search_all_teams.php?l=English%20Premier%20League";
+  const urlImages =
+    "https://www.thesportsdb.com/api/v1/json/2/search_all_teams.php?l=English%20Premier%20League";
 
   useEffect(() => {
     axios
@@ -40,10 +59,10 @@ function App() {
       .then((response) => {
         // access to the right team badge //
         let imagesArr = {};
-        (response.data.teams).map(element => {
-          imagesArr[element.strTeam] = element.strTeamBadge
-        })
-        setImages(imagesArr) 
+        response.data.teams.map((element) => {
+          imagesArr[element.strTeam] = element.strTeamBadge;
+        });
+        setImages(imagesArr);
       })
       .then()
       .catch((err) => {
@@ -51,7 +70,14 @@ function App() {
       });
   }, []);
 
-  return <div className="App">{events && images && <ListEvents data={events} images={images}/>}</div>;
+  return (
+    <div className="App">
+      <Box>
+        <TextInput value={inputValue} onChange={handleSearchInput}></TextInput>
+      </Box>
+      {events && images && <ListEvents data={events} images={images} />}
+    </div>
+  );
 }
 
 export default App;

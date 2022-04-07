@@ -1,13 +1,23 @@
 .App {
   text-align: center;
-  background-color: black;
+  background-color: grey;
   color: white;
   padding-left: 30rem;
   padding-right: 30rem;
   padding-top: 5rem;
 }
-.Team {
-  color: darkgreen
+.Teamhome {
+  color: darkgreen;
+  text-align: right;
+  justify-content: space-between;
+}
+.Teamaway {
+  color: darkgreen;
+  text-align: left;
+  justify-content: space-between;
+}
+.Venue {
+  text-align: left;
 }
 
 
