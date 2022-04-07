@@ -9,6 +9,7 @@ export default function ListEvents(props) {
 
   return (
     <div>
+      <h1>Latest events</h1>
       <table>
         <thead>
           <tr>
@@ -24,12 +25,14 @@ export default function ListEvents(props) {
             return (
               <tr key={element.idEvent}>
                 <td>{element.dateEvent}</td>
-                <td>{element.strHomeTeam}</td>
-
                 <td>
-                  {element.intHomeScore} : {element.intAwayScore}
+                  <img width="30px" src={props.images[element.strHomeTeam]} />
+                  {element.strHomeTeam}
                 </td>
-                <td>{element.strAwayTeam}</td>
+                <td>
+                  {element.intHomeScore} - {element.intAwayScore}
+                </td>            
+                <td> <img width="30px" src={props.images[element.strAwayTeam]} />{element.strAwayTeam}</td>
                 <td>{element.strVenue}</td>
               </tr>
             );

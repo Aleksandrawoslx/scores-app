@@ -9,13 +9,16 @@ import "./App.css";
 
 function App() {
   const [events, setEvents] = useState();
+  const [images, setImages] = useState()
+  
 
-  const url =
+  // endpoint for events //
+  const urlEvents =
     "https://www.thesportsdb.com/api/v1/json/2/eventsseason.php?id=4328&s=2020-2021";
 
   useEffect(() => {
     axios
-      .get(url)
+      .get(urlEvents)
       .then((response) => {
         setEvents(response.data.events);
       })
@@ -24,7 +27,29 @@ function App() {
       });
   }, []);
 
-  return <div className="App">{events && <ListEvents data={events} />}</div>;
+  
+  // endpoint for images //
+  const urlImages = "https://www.thesportsdb.com/api/v1/json/2/search_all_teams.php?l=English%20Premier%20League";
+
+  useEffect(() => {
+    axios
+      .get(urlImages)
+      .then((response) => {
+        let imagesArr = {};
+        (response.data.teams).map(element => {
+          imagesArr[element.strTeam] = element.strTeamBadge
+        })
+
+        setImages(imagesArr)
+        
+      })
+      .then()
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  return <div className="App">{events && images && <ListEvents data={events} images={images}/>}</div>;
 }
 
 export default App;
