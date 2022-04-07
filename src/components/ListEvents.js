@@ -25,14 +25,15 @@ export default function ListEvents(props) {
             return (
               <tr key={element.idEvent}>
                 <td>{element.dateEvent}</td>
-                <td>
-                  <img width="30px" src={props.images[element.strHomeTeam]} />
-                  {element.strHomeTeam}
+                <td className="Team">
+                {element.strHomeTeam}
+                  <img width="20px" src={props.images[element.strHomeTeam]} />
+                  
                 </td>
                 <td>
                   {element.intHomeScore} - {element.intAwayScore}
                 </td>            
-                <td> <img width="30px" src={props.images[element.strAwayTeam]} />{element.strAwayTeam}</td>
+                <td className="Team"> <img width="20px" src={props.images[element.strAwayTeam]} />{element.strAwayTeam}</td>
                 <td>{element.strVenue}</td>
               </tr>
             );

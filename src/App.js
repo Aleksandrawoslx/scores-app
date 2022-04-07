@@ -8,6 +8,8 @@ import axios from "axios";
 import "./App.css";
 
 function App() {
+
+  // relevant events and images states //
   const [events, setEvents] = useState();
   const [images, setImages] = useState()
   
@@ -35,13 +37,12 @@ function App() {
     axios
       .get(urlImages)
       .then((response) => {
+        // access to the right team badge //
         let imagesArr = {};
         (response.data.teams).map(element => {
           imagesArr[element.strTeam] = element.strTeamBadge
         })
-
-        setImages(imagesArr)
-        
+        setImages(imagesArr) 
       })
       .then()
       .catch((err) => {

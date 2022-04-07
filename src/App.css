@@ -1,9 +1,14 @@
 .App {
   text-align: center;
   background-color: black;
-  color: white
+  color: white;
+  padding-left: 30rem;
+  padding-right: 30rem;
+  padding-top: 5rem;
 }
-
+.Team {
+  color: darkgreen
+}
 
 
 
