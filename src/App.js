@@ -1,5 +1,4 @@
-import Navbar from "./components/Navbar";
-import { Route, Routes } from "react-router-dom";
+
 import ListEvents from "./components/ListEvents";
 import Fuse from "fuse.js";
 import { useState } from "react";
@@ -8,6 +7,7 @@ import axios from "axios";
 import {
   Box,
   DateInput,
+  Grommet,
   Text,
   TextInput,
   RangeSelector,
@@ -20,17 +20,24 @@ function App() {
   // relevant events and images states //
   const [events, setEvents] = useState();
   const [images, setImages] = useState();
-  const [searchresults, setSearchResults] = useState();
+  const [searchResults, setSearchResults] = useState();
   const [inputValue, setInputValue] = useState("");
 
-  const fuse = new Fuse (events, {key: "strHomeTeam"});
+  const options = {
+    keys: ["strHomeTeam", 
+            "strAwayTeam",
+            "strVenue"
+      ]
+  }
+
+  const fuse = new Fuse (events, options);
 
   const handleSearchInput = (e) => {
     setInputValue(e.target.value);
     const fuzzyResult = fuse.search(inputValue);
-    console.log(inputValue);
+    console.log(fuzzyResult);
     inputValue.length == 0
-      ? setSearchResults([])
+      ? setSearchResults(events)
       : setSearchResults(fuzzyResult);
   };
 
@@ -43,6 +50,7 @@ function App() {
       .get(urlEvents)
       .then((response) => {
         setEvents(response.data.events);
+        
       })
       .catch((err) => {
         console.log(err);
@@ -70,14 +78,39 @@ function App() {
       });
   }, []);
 
+
+
+
+  const theme = {
+    notification: { container: { background: "brand" } },
+    global: {
+      font: {
+        family: "Helvetica",
+        size: "14px",
+        height: "20px",
+      },
+    },
+  };
+
+
+  // console.log(events)
+
   return (
-    <div className="App">
-      <Box>
+    
+      <Grommet theme={theme}>
+        <Box width="60vw" flex margin="auto">
+        <Box>
         <TextInput value={inputValue} onChange={handleSearchInput}></TextInput>
       </Box>
-      {events && images && <ListEvents data={events} images={images} />}
-    </div>
+      <Box>
+      {events && images &&<ListEvents data={events} images={images} />}
+      </Box>
+
+        </Box>
+     
+      </Grommet>
+     
+   
   );
 }
-
 export default App;

@@ -1,25 +1,24 @@
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
+
+import { grommet } from "grommet";
+import { Box, Heading, Table, TableHeader, TableRow,TableCell, TableBody } from "grommet";
 
 export default function ListEvents(props) {
   let eventsArr = props.data;
 
+  // data from the API mapped onto a table //
   return (
-    <div>
-      <h1>Latest events</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Home Team</th>
-            <th>Score</th>
-            <th>Away Team</th>
-            <th>Venue</th>
-          </tr>
-        </thead>
+    <Box>
+      <Heading>Latest events</Heading>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableCell>Date</TableCell>
+            <TableCell>Home Team</TableCell>
+            <TableCell>Score</TableCell>
+            <TableCell>Away Team</TableCell>
+            <TableCell>Venue</TableCell>
+          </TableRow>
+        </TableHeader>
         <tbody>
           {eventsArr.map((element) => {
             return (
@@ -34,12 +33,12 @@ export default function ListEvents(props) {
                   {element.intHomeScore} - {element.intAwayScore}
                 </td>            
                 <td className="Teamaway"> <img width="20px" src={props.images[element.strAwayTeam]} />{element.strAwayTeam}</td>
-                <td className="Venue">{element.strVenue}</td>
+                <td className="Venue"> <img width="20px" src="/tiny_venue.png"></img> {element.strVenue}</td>
               </tr>
             );
           })}
         </tbody>
-      </table>
-    </div>
+      </Table>
+      </Box>
   );
 }
