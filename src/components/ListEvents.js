@@ -1,44 +1,57 @@
-
 import { grommet } from "grommet";
-import { Box, Heading, Table, TableHeader, TableRow,TableCell, TableBody } from "grommet";
+import {
+  Box,
+  Table,
+  TableHeader,
+  TableRow,
+  TableCell,
+  TableBody,
+} from "grommet";
 
 export default function ListEvents(props) {
   let eventsArr = props.data;
 
   // data from the API mapped onto a table //
   return (
-    <Box>
-      <Heading>Latest events</Heading>
+    <Box margin="medium">
+     
       <Table>
         <TableHeader>
           <TableRow>
             <TableCell>Date</TableCell>
-            <TableCell>Home Team</TableCell>
-            <TableCell>Score</TableCell>
-            <TableCell>Away Team</TableCell>
+            <TableCell align="right">Home Team</TableCell>
+            <TableCell align="center">Score</TableCell>
+            <TableCell align="left">Away Team</TableCell>
             <TableCell>Venue</TableCell>
           </TableRow>
         </TableHeader>
-        <tbody>
+        <TableBody>
           {eventsArr.map((element) => {
             return (
-              <tr key={element.idEvent}>
-                <td>{element.dateEvent}</td>
-                <td className="Teamhome">
-                {element.strHomeTeam}
+              <TableRow key={element.idEvent}>
+                <TableCell>{element.dateEvent}</TableCell>
+                <TableCell align="right" className="Teamhome">
+                  {element.strHomeTeam}
                   <img width="20px" src={props.images[element.strHomeTeam]} />
-                  
-                </td>
-                <td>
+                </TableCell>
+                <TableCell align="center">
                   {element.intHomeScore} - {element.intAwayScore}
-                </td>            
-                <td className="Teamaway"> <img width="20px" src={props.images[element.strAwayTeam]} />{element.strAwayTeam}</td>
-                <td className="Venue"> <img width="20px" src="/tiny_venue.png"></img> {element.strVenue}</td>
-              </tr>
+                </TableCell>
+                <TableCell align="left" className="Teamaway">
+                  {" "}
+                  <img width="20px" src={props.images[element.strAwayTeam]} />
+                  {element.strAwayTeam}
+                </TableCell>
+                <TableCell className="Venue">
+                  {" "}
+                  <img width="20px" src="/tiny_venue.png"></img>{" "}
+                  {element.strVenue}
+                </TableCell>
+              </TableRow>
             );
           })}
-        </tbody>
+        </TableBody>
       </Table>
-      </Box>
+    </Box>
   );
 }

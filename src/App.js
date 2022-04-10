@@ -1,4 +1,3 @@
-
 import ListEvents from "./components/ListEvents";
 import Fuse from "fuse.js";
 import { useState } from "react";
@@ -6,12 +5,8 @@ import { useEffect } from "react";
 import axios from "axios";
 import {
   Box,
-  DateInput,
   Grommet,
-  Text,
   TextInput,
-  RangeSelector,
-  Stack,
   Heading,
 } from "grommet";
 import "./App.css";
@@ -23,20 +18,22 @@ function App() {
   const [searchResults, setSearchResults] = useState();
   const [inputValue, setInputValue] = useState("");
 
+  // fuzzy search options //
   const options = {
-    keys: ["strHomeTeam", 
-            "strAwayTeam",
-            "strVenue"
-      ]
-  }
+    keys: ["strHomeTeam", "strAwayTeam", "strVenue"],
+    threshold: 0.0,
+  };
 
-  const fuse = new Fuse (events, options);
+  const fuse = new Fuse(events, options);
 
   const handleSearchInput = (e) => {
     setInputValue(e.target.value);
-    const fuzzyResult = fuse.search(inputValue);
-    console.log(fuzzyResult);
-    inputValue.length == 0
+    let fuzzyResult = fuse.search(inputValue);
+    fuzzyResult = fuzzyResult.map((element) => {
+      return element.item;
+    });
+
+    inputValue.length < 2
       ? setSearchResults(events)
       : setSearchResults(fuzzyResult);
   };
@@ -50,7 +47,6 @@ function App() {
       .get(urlEvents)
       .then((response) => {
         setEvents(response.data.events);
-        
       })
       .catch((err) => {
         console.log(err);
@@ -78,9 +74,7 @@ function App() {
       });
   }, []);
 
-
-
-
+  // Grommet global theme configuration //
   const theme = {
     notification: { container: { background: "brand" } },
     global: {
@@ -91,26 +85,27 @@ function App() {
       },
     },
   };
-
-
-  // console.log(events)
+// proxy from fuzzy search to props //
+  let renderData = searchResults ? searchResults : events;
 
   return (
-    
-      <Grommet theme={theme}>
-        <Box width="60vw" flex margin="auto">
-        <Box>
-        <TextInput value={inputValue} onChange={handleSearchInput}></TextInput>
-      </Box>
-      <Box>
-      {events && images &&<ListEvents data={events} images={images} />}
-      </Box>
-
+    <Grommet theme={theme}>
+      <Box width="60vw" margin="auto">
+        <Heading>Latest events</Heading>
+        <Box flex align="center">
+          <Box width="400px">
+            <TextInput
+              placeholder="search for team or venue..."
+              value={inputValue}
+              onChange={handleSearchInput}
+            ></TextInput>
+          </Box>
         </Box>
-     
-      </Grommet>
-     
-   
+        <Box>
+          {events && images && <ListEvents data={renderData} images={images} />}
+        </Box>
+      </Box>
+    </Grommet>
   );
 }
 export default App;
