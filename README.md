@@ -1,70 +1,42 @@
-# Getting Started with Create React App
+# Scores App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Local deployment
 
-In the project directory, you can run:
+1. Clone repo: ` git clone https://github.com/Aleksandrawoslx/scores-app.git`
+2. `npm install`
+2. ` npm start`
+3. go to: `http://localhost:3000`
 
-### `npm start`
+### Data sources
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+This implementation was amde using open (not paid) endpoints.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Events: 
+` "https://www.thesportsdb.com/api/v1/json/2/eventsseason.php?id=4328&s=2021-2022"`
 
-### `npm test`
+`Id=4328`, gives us Premier League 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Images:
+` "https://www.thesportsdb.com/api/v1/json/2/search_all_teams.php?l=English%20Premier%20League"`
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Search implementation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Search is using fuzzy search - [fuse.js](https://fusejs.io/)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Search fields: home team, away team, venue. Search fields can be customized in fuzzy search options i.e. `keys: ["strHomeTeam", "strAwayTeam", "strVenue"]`
 
-### `npm run eject`
+Search is case insensitive by dafault. You can add case sensitivity by adding: `isCaseSensitive: true` to config object.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Fuzieness threshold is strict `0.0` for exact search, you can have fun with changing it in fuse options: `threshold: 0.0`. Don't go above 0.6, It does not make any sense.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Search works on `keyup`. Empty search field defaults to all events state.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Styling
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Components and styling come from [grommet.io](http://grommet.io).
 
-## Learn More
+### Have fun
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
