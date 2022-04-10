@@ -4,13 +4,14 @@
 ## Local deployment
 
 1. Clone repo: ` git clone https://github.com/Aleksandrawoslx/scores-app.git`
-2. `npm install`
-2. ` npm start`
-3. go to: `http://localhost:3000`
+2. `cd scores-app`
+3. `npm install`
+4. ` npm start`
+5. go to: `http://localhost:3000`
 
 ### Data sources
 
-This implementation was amde using open (not paid) endpoints.
+This implementation was made using open (unpaid) endpoints.
 
 Events: 
 ` "https://www.thesportsdb.com/api/v1/json/2/eventsseason.php?id=4328&s=2021-2022"`
@@ -29,7 +30,7 @@ Search fields: home team, away team, venue. Search fields can be customized in f
 
 Search is case insensitive by dafault. You can add case sensitivity by adding: `isCaseSensitive: true` to config object.
 
-Fuzieness threshold is strict `0.0` for exact search, you can have fun with changing it in fuse options: `threshold: 0.0`. Don't go above 0.6, It does not make any sense.
+Fuzieness threshold is strict `0.0` for exact search, you can have fun with changing it in fuse options: `threshold: 0.0`. Don't go above 0.6, it does not make any sense.
 
 Search works on `keyup`. Empty search field defaults to all events state.
 
