@@ -90,7 +90,7 @@ function App() {
 
   return (
     <Grommet theme={theme}>
-      <Box width="60vw" margin="auto">
+      <Box width="80%" margin="auto">
         <Heading>Latest events</Heading>
         <Box flex align="center">
           <Box width="400px">
