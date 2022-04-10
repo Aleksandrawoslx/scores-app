@@ -16,7 +16,7 @@ This implementation was made using open (unpaid) endpoints.
 Events: 
 ` "https://www.thesportsdb.com/api/v1/json/2/eventsseason.php?id=4328&s=2021-2022"`
 
-`Id=4328`, gives us Premier League 
+`Id=4328`, gives us England Premier League 
 
 Images:
 ` "https://www.thesportsdb.com/api/v1/json/2/search_all_teams.php?l=English%20Premier%20League"`
